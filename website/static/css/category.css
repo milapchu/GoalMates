@@ -14,6 +14,18 @@ body {
     padding: 20px;
 }
 
+.image-container {
+    flex: 1; 
+    max-width: 20%;
+    margin: 0 auto;
+}
+
+.profile-image {
+    max-width: 100%;
+    height: auto; 
+    border-radius: 10px;
+}
+
 h1 {
     color: #333;
     margin-bottom: 60px;

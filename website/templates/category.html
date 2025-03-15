@@ -7,7 +7,9 @@
 
 {% block content %}
 <div class="container">
-    <img src="{{ url_for('static', filename='images/rabbit.jpg') }}" alt="rabbit logo">
+    <div class="image-container">
+    <img src="{{ url_for('static', filename='images/rabbit.jpg') }}" alt="Profile Image" class="profile-image">
+    </div>
     <h1>My Goal is related to...</h1>
     <div class="button-group">
         <a href="{{ url_for('templates', filename='categorydetails.html') }}">
