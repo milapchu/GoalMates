@@ -1,2 +1,4 @@
-database.db
-*pycache*
+_pycache_/
+instance/
+requirements.txt
+venv/
