@@ -1,0 +1,5 @@
+_pycache_/
+instance/
+/instance/database.db
+requirements.txt
+venv/
