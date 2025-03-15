@@ -1,4 +1,4 @@
-/* Ensure the entire page background is white */
+
 body {
     margin: 0;
     padding: 0;
@@ -59,3 +59,4 @@ body {
 .custom-button:hover {
     background-color: #d89ecb;
 }
+
