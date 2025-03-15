@@ -1,0 +1,208 @@
+/* Example CSS for the Leaderboard portion */
+
+/* Reset (optional) */
+* {
+  box-sizing: border-box;
+}
+
+/* Container for the entire leaderboard */
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+  background-color: #fff;
+  width: 100%;
+  padding-bottom: 20px; /* so there's space under the podium */
+}
+
+/* Top “scene” background */
+.scene-background {
+  width: 100%;
+  padding: 20px;
+  /*background: linear-gradient(to top, #FDE1C9, #FAD7B0);*/
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  text-align: center;
+  position: relative;
+}
+
+/* Leaderboard Title */
+.title {
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Podium container */
+.podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Each podium spot */
+.podium-spot {
+  background-color: #d9d9d9;
+  border-radius: 10px 10px 0 0;
+  width: 100px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+/* Different heights/colors for each spot */
+.spot-1 {
+  background-color: #EDB4E0; /* 1st place color */
+  height: 180px;
+}
+.spot-2 {
+  background-color: #6C99EC; /* 2nd place color */
+  height: 160px;
+}
+.spot-3 {
+  background-color: #26395C; /* 3rd place color */
+  height: 140px;
+}
+
+/* Position number (1,2,3) */
+.position {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+/* Score text */
+.score {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Avatar in podium */
+.avatar-container {
+  position: absolute;
+  top: -40px;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  border: 3px solid #fff;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-container img {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+
+/* Winner badge
+.winner-badge {
+  position: absolute;
+  top: -60px;
+  background-color: gold;
+  color: #444;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+} */
+
+/* Leaderboard list container */
+.leaderboard-list {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 40px;
+  background-color: #fdfdfd;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+/* Each row */
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.rank {
+  width: 30px;
+  font-weight: bold;
+  color: #555;
+}
+
+.leaderboard-row .avatar-container {
+  width: 50px;
+  height: 50px;
+  top: auto;
+  left: auto;
+  position: static;
+  border: none;
+  margin: 0 10px;
+}
+.leaderboard-row .avatar-container img {
+  width: 50px;
+  height: 50px;
+}
+
+/* User info in each row */
+.user-info {
+  flex: 1;
+}
+.user-name {
+  font-weight: 600;
+  color: #333;
+}
+.points {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* Rank change (+/-) */
+.change {
+  font-weight: bold;
+  margin-left: 10px;
+}
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}
+
+/* Highlight a "selected" row */
+.leaderboard-row.selected {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.custom-button {
+  background-color: #EDB4E0;
+  position: center;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #d89ecb;
+}
