@@ -1,0 +1,61 @@
+/* Ensure the entire page background is white */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+/* Container to center the form vertically & horizontally */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Let the container expand if needed */
+    background-color: #ffffff; /* White page background */
+    padding: 20px; /* Optional padding around content */
+}
+
+/* Wrapper or form container */
+.signup-wrapper {
+    width: 100%;
+    max-width: 600px;
+    /* remove any background-color here if you had one */
+}
+
+/* Actual form box */
+.signup-form {
+    background-color: #f9f9f9; /* Grey background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Form inputs, labels, etc. can remain as you had them */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Button styling remains the same */
+.custom-button {
+    background-color: #EDB4E0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.custom-button:hover {
+    background-color: #d89ecb;
+}
