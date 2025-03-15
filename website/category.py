@@ -10,3 +10,17 @@ category = Blueprint('category', __name__)
 @login_required
 def show_categories():
     return render_template("category.html")
+
+
+# @category.route('/select_category', methods=['GET', 'POST'])
+# def select_category():
+#     if request.method == 'POST':
+#         category = request.form.get('category')
+#         # You can use the category value here if needed
+#         # For now, just redirect to 'a.html'
+#         return redirect(url_for('categorydetails.html'))
+#     return render_template('category.html')
+
+# @category.route('/categorydetails')
+# def categorydetails():
+#     return render_template('categorydetails.html') 
