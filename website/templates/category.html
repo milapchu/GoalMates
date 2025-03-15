@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Category{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>My Goal is related to...</h1>
+    <div class="button-group">
+        <button class="category-btn">Academic</button>
+        <button class="category-btn">Hobbies</button>
+        <button class="category-btn">Fitness</button>
+    </div>
+</div>
+{% endblock %}
