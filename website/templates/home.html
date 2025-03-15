@@ -1,14 +1,218 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+  <!-- External CSS from your static folder -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
+  <style>
+    /* CSS from the first chunk */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .dashboard-container {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .board {
+      background-color: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+    }
+    /* Left Board - Progress */
+    .progress-board {
+      min-width: 400px;
+    }
+    .progress-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background-color: #6C99EC;
+      width: 65%;
+      transition: width 0.3s ease;
+    }
+    .update-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background-color 0.3s;
+    }
+    .update-button:hover {
+      background-color: #1e88e5;
+    }
+    /* Leaderboard List Styles */
+    .leaderboard-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+    .rank {
+      width: 40px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #666;
+    }
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+    .user-info {
+      flex: 1;
+    }
+    .user-name {
+      margin: 0;
+      font-weight: 600;
+    }
+    .user-progress {
+      color: #666;
+      margin: 5px 0 0;
+    }
+    /* Top 3 Styles */
+    .top-1 { background-color: #fff3e0; }
+    .top-2 { background-color: #f5f5f5; }
+    .top-3 { background-color: #e8f5e9; }
+    .top-1 .rank { color: #ff9800; }
+    .top-2 .rank { color: #757575; }
+    .top-3 .rank { color: #4CAF50; }
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .board {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <!-- Left Board - Progress -->
+  <div class="board progress-board">
+    <h3>Your Progress</h3>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <span>65% Completed</span>
+    </div>
+    <button class="btn custom-button" onclick="location.href='progress.html'">
+      Update Progress
+    </button>
+  </div>
+
+  <!-- Right Board - Leaderboard -->
+  <div class="board">
+    <h3>Leaderboard</h3>
+    <!-- Leaderboard Podium Section -->
+    <div class="scene-background">
+      <div class="podium">
+        <!-- 2nd Place -->
+        <div class="podium-spot spot-2">
+          <div class="avatar-container">
+            <img src="{{ url_for('static', filename='images/bunny1.png') }}" alt="Avatar 2" />
+          </div>
+          <div class="position">2</div>
+          <div class="score">780 pts</div>
+        </div>
+        <!-- 1st Place -->
+        <div class="podium-spot spot-1">
+          <div class="avatar-container">
+            <img src="{{ url_for('static', filename='images/bunny2.png') }}" alt="Avatar 1" />
+          </div>
+          <div class="position">1</div>
+          <div class="score">800 pts</div>
+        </div>
+        <!-- 3rd Place -->
+        <div class="podium-spot spot-3">
+          <div class="avatar-container">
+            <img src="{{ url_for('static', filename='images/bunny3.png') }}" alt="Avatar 3" />
+          </div>
+          <div class="position">3</div>
+          <div class="score">750 pts</div>
+        </div>
+      </div>
+    </div>
+    <!-- Leaderboard List -->
+    <ul class="leaderboard-list">
+      <li class="leaderboard-item">
+        <div class="rank">04</div>
+        <img src="{{ url_for('static', filename='images/bunny4.jpg') }}" class="user-avatar" alt="User">
+        <div class="user-info">
+          <h5 class="user-name">Mila</h5>
+          <p class="user-progress">700 pts</p>
+        </div>
+      </li>
+      <li class="leaderboard-item">
+        <div class="rank">05</div>
+        <img src="{{ url_for('static', filename='images/bunny7.png') }}" class="user-avatar" alt="User">
+        <div class="user-info">
+          <h5 class="user-name">Lyn</h5>
+          <p class="user-progress">656 pts</p>
+        </div>
+      </li>
+      <li class="leaderboard-item selected">
+        <div class="rank">06</div>
+        <img src="{{ url_for('static', filename='images/bunny6.jpg') }}" class="user-avatar" alt="User">
+        <div class="user-info">
+          <h5 class="user-name">Tinh</h5>
+          <p class="user-progress">620 pts</p>
+        </div>
+      </li>
+      <li class="leaderboard-item">
+        <div class="rank">07</div>
+        <img src="{{ url_for('static', filename='images/bunny5.png') }}" class="user-avatar" alt="User">
+        <div class="user-info">
+          <h5 class="user-name">Clariya</h5>
+          <p class="user-progress">585 pts</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <ul class="list-group list-group-flush" id="notes">
   {% for note in user.notes %}
-  <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </li>
+    <li class="list-group-item">
+      {{ note.data }}
+      <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
   {% endfor %}
 </ul>
-
 {% endblock %}
