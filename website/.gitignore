@@ -3,4 +3,4 @@ instance/database.db
 requirements.txt
 venv/
 website/__pycache__/
-
+env/
