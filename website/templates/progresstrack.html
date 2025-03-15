@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker</title>
+    <link rel = "stylesheet" href="/website/static/css/progresstrack.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/progresstrack.css') }}"> -->
+</head>
+<body>
+    <div class="container">
+        <div class="progress-container">
+            <h2>Progress: <span id="progress-percent">0%</span></h2>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="task-board">
+            <div class="task-input">
+                <input type="text" id="task-input" placeholder="Enter new task...">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+            <ul class="task-list" id="task-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+
+        function addTask() {
+            const input = document.getElementById('task-input');
+            const text = input.value.trim();
+            
+            if (text) {
+                const task = {
+                    id: Date.now(),
+                    text: text,
+                    completed: false
+                };
+                
+                tasks.push(task);
+                input.value = '';
+                renderTasks();
+                updateProgress();
+            }
+        }
+
+        function toggleTask(id) {
+            tasks = tasks.map(task => 
+                task.id === id ? {...task, completed: !task.completed} : task
+            );
+            updateProgress();
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = tasks.map(task => `
+                <li class="task-item ${task.completed ? 'completed' : ''}">
+                    <input 
+                        type="checkbox" 
+                        class="task-checkbox" 
+                        ${task.completed ? 'checked' : ''}
+                        onchange="toggleTask(${task.id})"
+                    >
+                    <span class="task-text">${task.text}</span>
+                </li>
+            `).join('');
+        }
+
+        function updateProgress() {
+            const completedTasks = tasks.filter(task => task.completed).length;
+            const totalTasks = tasks.length;
+            const progressPercent = totalTasks > 0 
+                ? Math.round((completedTasks / totalTasks) * 100)
+                : 0;
+
+            document.querySelector('.progress-fill').style.width = `${progressPercent}%`;
+            document.getElementById('progress-percent').textContent = `${progressPercent}%`;
+        }
+    </script>
+</body>
+</html>
