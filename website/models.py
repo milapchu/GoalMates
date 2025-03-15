@@ -5,7 +5,7 @@ from sqlalchemy.sql import func
 from sqlalchemy import Enum
 
 # Initialize Flask & Database
-app = Flask(_name_)
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
@@ -64,7 +64,7 @@ class Group(db.Model):
     members = db.relationship('User', secondary=group_members, back_populates='groups')
 
 # Create database tables
-if _name_ == "_main_":
+if __name__ == "_main_":
     with app.app_context():
         db.create_all()
         print("Database tables created successfully!")
