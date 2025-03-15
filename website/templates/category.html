@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Category{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>My Goal is related to...</h1>
+    <div class="button-group">
+        <button class="category-btn" data-category-id="1">Academic</button>
+        <button class="category-btn" data-category-id="2">Hobbies</button>
+        <button class="category-btn" data-category-id="3">Fitness</button>
+    </div>
+    <div id="message"></div> <!-- For displaying success/error messages -->
+</div>
+
+<script>
+    // Event listener for category buttons
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            let categoryId = this.getAttribute('data-category-id');
+            joinCategory(categoryId);
+        });
+    });
+
+    // Function to send the category join request
+    function joinCategory(categoryId) {
+        fetch(`/join-category/${categoryId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'  // CSRF protection (if you're using Flask-WTF)
+            },
+            body: JSON.stringify({
+                'category_id': categoryId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messageDiv = document.getElementById('message');
+            if (data.message) {
+                messageDiv.textContent = data.message;
+                messageDiv.style.color = 'green';
+            } else if (data.error) {
+                messageDiv.textContent = data.error;
+                messageDiv.style.color = 'red';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+{% endblock %}
