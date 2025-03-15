@@ -1,5 +1,6 @@
-_pycache_/
 instance/
-/instance/database.db
+instance/database.db
 requirements.txt
 venv/
+website/__pycache__/
+
