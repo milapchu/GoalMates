@@ -1,9 +1,10 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from .db import db  
 from os import path
 from flask_login import LoginManager
+from .category import category
 
-db = SQLAlchemy()
+# db = SQLAlchemy()
 DB_NAME = "database.db"
 
 
