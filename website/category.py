@@ -5,3 +5,8 @@ from .models import Category, User
 
 category = Blueprint('category', __name__)
 
+# Display all categories to the user (GET method)
+@category.route('/category')
+@login_required
+def show_categories():
+    return render_template("category.html")
