@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .db import db  # Now import db from website.db
-from .models import Category, User
+from .models import Category
 
 category = Blueprint('category', __name__)
 
@@ -21,6 +21,6 @@ def show_categories():
 #         return redirect(url_for('categorydetails.html'))
 #     return render_template('category.html')
 
-# @category.route('/categorydetails')
-# def categorydetails():
-#     return render_template('categorydetails.html') 
+@category.route('/categorydetails')
+def categorydetails():
+    return render_template('categorydetails.html') 
