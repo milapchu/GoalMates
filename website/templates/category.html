@@ -7,13 +7,17 @@
 
 {% block content %}
 <div class="container">
-    <img src="{{ url_for('static', filename='images/rabbit.jpg') }}" alt="rabbit logo">
+    
     <h1>My Goal is related to...</h1>
     <div class="button-group">
-        <!-- Disabled buttons for each category -->
-        <button class="category-btn" disabled>Academic</button>
-        <button class="category-btn" disabled>Hobbies</button>
-        <button class="category-btn" disabled>Fitness</button>
+        <a href="{{ url_for('categorydetails') }}">
+        <button class="category-btn" >Academic</button></a>
+
+        <a href="{{ url_for('categorydetails') }}">
+        <button class="category-btn">Hobbies</button></a>
+
+        <a href="{{ url_for('categorydetails') }}">
+        <button class="category-btn">Fitness</button></a>
     </div>
 </div>
 {% endblock %}
