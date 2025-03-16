@@ -2,8 +2,10 @@
 {% block title %}Home{% endblock %}
 
 {% block extra_css %}
+  <!-- External CSS from your static folder -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
   <style>
+    /* CSS from the first chunk */
     body {
       font-family: 'Arial', sans-serif;
       background-color: #f5f5f5;
@@ -15,6 +17,15 @@
       gap: 30px;
       max-width: 1200px;
       margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .board {
       background-color: white;
@@ -22,6 +33,11 @@
       padding: 30px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       flex: 1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .board:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
     /* Left Board - Progress */
     .progress-board {
@@ -30,6 +46,7 @@
     .progress-container {
       text-align: center;
       margin-bottom: 30px;
+      position: relative;
     }
     .progress-bar {
       width: 100%;
@@ -38,28 +55,41 @@
       border-radius: 10px;
       overflow: hidden;
       margin: 20px 0;
+      position: relative;
     }
     .progress-fill {
       height: 100%;
       background-color: #6C99EC;
-      width: 65%;
-      transition: width 0.3s ease;
+      width: 0;
+      transition: width 1s ease-in-out;
+      position: relative;
+      overflow: hidden;
     }
-    .update-button {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      background-color: #2196F3;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1em;
-      transition: background-color 0.3s;
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.3) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      animation: shimmer 2s infinite;
     }
-    .update-button:hover {
-      background-color: #1e88e5;
+    @keyframes shimmer {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(100%);
+      }
     }
+
+
     /* Leaderboard List Styles */
     .leaderboard-list {
       list-style: none;
@@ -73,6 +103,28 @@
       margin-bottom: 15px;
       border-radius: 10px;
       background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .leaderboard-item:hover {
+      transform: translateX(10px);
+      background-color: #F8E8F5;
+    }
+    .leaderboard-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background-color: #F8E8F5;
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    .leaderboard-item:hover::after {
+      transform: scaleY(1);
     }
     .rank {
       width: 40px;
@@ -86,6 +138,10 @@
       border-radius: 50%;
       margin-right: 15px;
       object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .leaderboard-item:hover .user-avatar {
+      transform: scale(1.1);
     }
     .user-info {
       flex: 1;
@@ -98,13 +154,31 @@
       color: #666;
       margin: 5px 0 0;
     }
-    /* Top 3 Styles */
-    .top-1 { background-color: #fff3e0; }
-    .top-2 { background-color: #f5f5f5; }
-    .top-3 { background-color: #e8f5e9; }
+    /* Top 3 Styles with enhanced effects */
+    .top-1 { 
+      background-color: #fff3e0;
+      animation: glow 2s infinite alternate;
+    }
+    .top-2 { 
+      background-color: #f5f5f5;
+      animation: glow 2s infinite alternate 0.5s;
+    }
+    .top-3 { 
+      background-color: #e8f5e9;
+      animation: glow 2s infinite alternate 1s;
+    }
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      }
+      to {
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      }
+    }
     .top-1 .rank { color: #ff9800; }
     .top-2 .rank { color: #757575; }
     .top-3 .rank { color: #4CAF50; }
+    
     @media (max-width: 768px) {
       .dashboard-container {
         flex-direction: column;
@@ -124,11 +198,11 @@
     <h3>Your Progress</h3>
     <div class="progress-container">
       <div class="progress-bar">
-        <div class="progress-fill"></div>
+        <div class="progress-fill" id="progressFill"></div>
       </div>
-      <span>65% Completed</span>
+      <span id="progressText">0% Completed</span>
     </div>
-    <button class="btn custom-button" onclick="location.href='progress.html'">
+    <button class="btn custom-button" onclick="updateProgress()">
       Update Progress
     </button>
   </div>
@@ -136,7 +210,7 @@
   <!-- Right Board - Leaderboard -->
   <div class="board">
     <h3>Leaderboard</h3>
-    <!-- Leaderboard Podium Section from the second chunk -->
+    <!-- Leaderboard Podium Section -->
     <div class="scene-background">
       <div class="podium">
         <!-- 2nd Place -->
@@ -165,8 +239,8 @@
         </div>
       </div>
     </div>
-    <!-- Leaderboard List (integrated from both code chunks) -->
-    <ul class="leaderboard-list">
+    <!-- Leaderboard List -->
+    <ul class="leaderboard-list" id="leaderboardList">
       <li class="leaderboard-item">
         <div class="rank">04</div>
         <img src="{{ url_for('static', filename='images/bunny4.jpg') }}" class="user-avatar" alt="User">
@@ -179,7 +253,7 @@
         <div class="rank">05</div>
         <img src="{{ url_for('static', filename='images/bunny7.png') }}" class="user-avatar" alt="User">
         <div class="user-info">
-          <h5 class="user-name">Tinh</h5>
+          <h5 class="user-name">Lyn</h5>
           <p class="user-progress">656 pts</p>
         </div>
       </li>
@@ -187,8 +261,8 @@
         <div class="rank">06</div>
         <img src="{{ url_for('static', filename='images/bunny6.png') }}" class="user-avatar" alt="User">
         <div class="user-info">
-          <h5 class="user-name">Lyn</h5>
-          <p class="user-progress">598 pts</p>
+          <h5 class="user-name">Tinh</h5>
+          <p class="user-progress">620 pts</p>
         </div>
       </li>
       <li class="leaderboard-item">
@@ -203,7 +277,79 @@
   </div>
 </div>
 
-<!-- Existing Notes List from the second chunk -->
+<script>
+  // Initialize progress bar
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const targetProgress = 65;
+      
+      animateProgress(0, targetProgress);
+    }, 500);
+
+    // Add click animation to leaderboard items
+    const leaderboardItems = document.querySelectorAll('.leaderboard-item');
+    leaderboardItems.forEach(item => {
+      item.addEventListener('click', function() {
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 150);
+      });
+    });
+  });
+
+  function animateProgress(start, end) {
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const duration = 1500;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const current = start + (end - start) * progress;
+      progressFill.style.width = `${current}%`;
+      progressText.textContent = `${Math.round(current)}% Completed`;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+
+  function updateProgress() {
+    const button = document.querySelector('.update-button');
+    const currentProgress = parseInt(document.getElementById('progressText').textContent);
+    const newProgress = Math.min(100, currentProgress + Math.floor(Math.random() * 15) + 5);
+    
+    // Add loading state to button
+    button.style.pointerEvents = 'none';
+    button.style.opacity = '0.7';
+    button.textContent = 'Updating...';
+    
+    // Simulate API call
+    setTimeout(() => {
+      animateProgress(currentProgress, newProgress);
+      
+      // Reset button
+      button.style.pointerEvents = '';
+      button.style.opacity = '';
+      button.textContent = 'Update Progress';
+      
+      // Add success effect
+      button.style.backgroundColor = '#4CAF50';
+      setTimeout(() => {
+        button.style.backgroundColor = '';
+      }, 1000);
+    }, 800);
+  }
+</script>
+
 <ul class="list-group list-group-flush" id="notes">
   {% for note in user.notes %}
     <li class="list-group-item">
@@ -214,4 +360,4 @@
     </li>
   {% endfor %}
 </ul>
-{% endblock %}
+{% endblock %}
