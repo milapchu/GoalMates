@@ -14,3 +14,9 @@ def home():
 @login_required
 def category():
     return render_template("category.html", user=current_user)
+
+
+@views.route('/match', methods=['GET', 'POST'])
+@login_required
+def match():
+    return render_template("matches.html", user=current_user)
