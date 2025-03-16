@@ -8,17 +8,20 @@
 {% block content %}
 <div class="container">
     <div class="image-container">
-    <img src="{{ url_for('static', filename='images/rabbit.jpg') }}" alt="Profile Image" class="profile-image">
+
+        <img src="{{ url_for('static', filename='images/rabbit.jpg') }}" alt="Rabbit Image" class="logo-image">
     </div>
     <h1>My Goal is related to...</h1>
     <div class="button-group">
-        <a href="{{ url_for('templates', filename='categorydetails.html') }}">
+        
+        <a href="categorydetails.html">
         <button class="category-btn" >Academic</button></a>
 
-        <a href="{{ url_for('templates', filename='categorydetails.html') }}">
+        <a href="{{ url_for('category.categorydetails') }}">
         <button class="category-btn">Hobbies</button></a>
 
-        <a href="{{ url_for('templates', filename='categorydetails.html') }}">
+        <a href="{{ url_for('category.categorydetails') }}">
+
         <button class="category-btn">Fitness</button></a>
     </div>
 </div>

@@ -1,35 +1,50 @@
-{% extends "base.html" %}
+<!-- {% extends "base.html" %}
 {% block title %}Category{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/categorydetail.css') }}">
 {% endblock %}
+    
+{% block content %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <link rel="stylesheet" href ="/website/static/css/categorydetail.css">
+</head>
 
-{% block content %}
-    <img src="{{ url_for('static', filename='images/carrot.jpg') }}" alt="decorative left" class="design-side design-left">
-    <img src="/{{ url_for('static', filename='images/carrot.jpg') }}" alt="decorative right" class="design-side design-right">
+<body>
+    <!-- <img src="{{ url_for('static', filename='images/carrot.jpg') }}" alt="decorative left" class="design-side design-left">
+    <img src="{{ url_for('static', filename='images/carrot.jpg') }}" alt="decorative right" class="design-side design-right"> -->
 
+    <img src="/website/static/images/carrot.jpg" alt="decorative left" class="design-side design-left">
+    <img src="/website/static/images/carrot.jpg" alt="decorative right" class="design-side design-right">
     <div class="container">
         <h1>Tell us more about your goal</h1>
         <div class="form-container">
-            <form>
+            <form id="goal-form">
                 <div class="form-group">
                     <label for="goal-title">Goal Title</label>
-                    <input type="text" id="goal-title" placeholder="Enter your goal name">
+                    <input type="text" id="goal-title" placeholder="Enter your goal name" required>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="timeline">Timeline (months)</label>
-                    <input type="number" id="timeline" placeholder="Estimated duration">
+                    <input type="number" id="timeline" placeholder="Estimated duration" min="1" required>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="description">Goal Description</label>
-                    <textarea id="description" rows="4" placeholder="Describe your goal in detail"></textarea>
+                    <textarea id="description" rows="4" placeholder="Describe your goal in detail" required></textarea>
                 </div>
-
-                <button type="submit" class="next-btn">Next Step</button>
+            
+                <button type="button" class="next-btn">Match</button>
             </form>
         </div>
     </div>
 </body>
+
+
+<!-- {% endblock %} -->
